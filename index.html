@@ -28,6 +28,12 @@ header {
   align-items: center;
 }
 
+.song-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
 .song button {
   background: #00c853;
   border: none;
@@ -35,6 +41,11 @@ header {
   color: black;
   font-weight: bold;
   border-radius: 20px;
+  cursor: pointer;
+}
+
+label {
+  font-size: 12px;
   cursor: pointer;
 }
 
@@ -57,7 +68,12 @@ audio {
     <strong>Song One</strong><br>
     <small>Independent Artist</small>
   </div>
-  <button onclick="playSong('song1.mp3', 'Song One')">Play</button>
+  <div class="song-controls">
+    <label>
+      <input type="checkbox" id="loop1"> Loop
+    </label>
+    <button onclick="playSong('song1.mp3', 'Song One', 'loop1')">Play</button>
+  </div>
 </div>
 
 <div class="song">
@@ -65,7 +81,12 @@ audio {
     <strong>Song Two</strong><br>
     <small>Independent Artist</small>
   </div>
-  <button onclick="playSong('song2.mp3', 'Song Two')">Play</button>
+  <div class="song-controls">
+    <label>
+      <input type="checkbox" id="loop2"> Loop
+    </label>
+    <button onclick="playSong('song2.mp3', 'Song Two', 'loop2')">Play</button>
+  </div>
 </div>
 
 <audio id="audioPlayer" controls></audio>
@@ -73,8 +94,11 @@ audio {
 <script>
 const player = document.getElementById("audioPlayer");
 
-function playSong(src, title) {
+function playSong(src, title, loopCheckboxId) {
+  const loopCheckbox = document.getElementById(loopCheckboxId);
+
   player.src = src;
+  player.loop = loopCheckbox.checked;
   player.play();
 
   if ('mediaSession' in navigator) {
