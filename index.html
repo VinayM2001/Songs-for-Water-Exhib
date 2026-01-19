@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Music Library</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #121212;
+  color: white;
+}
+
+header {
+  padding: 16px;
+  font-size: 20px;
+  font-weight: bold;
+  background: #1e1e1e;
+}
+
+.song {
+  padding: 16px;
+  border-bottom: 1px solid #2a2a2a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.song button {
+  background: #00c853;
+  border: none;
+  padding: 8px 14px;
+  color: black;
+  font-weight: bold;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+audio {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: #000;
+}
+</style>
+</head>
+
+<body>
+
+<header>🎵 My Songs</header>
+
+<div class="song">
+  <div>
+    <strong>Song One</strong><br>
+    <small>Independent Artist</small>
+  </div>
+  <button onclick="playSong('song1.mp3', 'Song One')">Play</button>
+</div>
+
+<div class="song">
+  <div>
+    <strong>Song Two</strong><br>
+    <small>Independent Artist</small>
+  </div>
+  <button onclick="playSong('song2.mp3', 'Song Two')">Play</button>
+</div>
+
+<audio id="audioPlayer" controls></audio>
+
+<script>
+const player = document.getElementById("audioPlayer");
+
+function playSong(src, title) {
+  player.src = src;
+  player.play();
+
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: title,
+      artist: "My Website",
+      album: "My Songs"
+    });
+
+    navigator.mediaSession.setActionHandler('play', () => player.play());
+    navigator.mediaSession.setActionHandler('pause', () => player.pause());
+  }
+}
+</script>
+
+</body>
+</html>
